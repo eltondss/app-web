@@ -6,11 +6,10 @@
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>Aplicação Web</title>
-	<h:outputStylesheet library="css/" name="app.css" />
+	<h:outputStylesheet library="css/" name="bootstrap.css" />
 </h:head>
 <h:body onload="document.getElementById('form:campo-busca').focus()">
 	<div class="container">
-	
 		<h:form id="form">
 			<div class="search-bar">
 				<h:panelGrid columns="1">
@@ -22,7 +21,8 @@
 					</h:inputText>
 				</h:panelGrid>
 			</div>
-			<h:dataTable id="relatorio"
+			<h:dataTable class="table table-hover" id="relatorio"
+				rowClasses="info, par"
 				value="#{not empty componentesBean.filtro?componentesBean.filtrados:componentesBean.lista}"
 				var="item" rendered="#{not empty componentesBean.lista}">
 				<h:column headerClass="check-column">
@@ -33,7 +33,7 @@
 								render="relatorio" />
 						</h:selectBooleanCheckbox>
 					</f:facet>
-					<h:selectBooleanCheckbox value="#{item.selecionado}" />
+					<h:selectBooleanCheckbox />
 				</h:column>
 				<h:column headerClass="codigo-column">
 					<f:facet name="header">Código</f:facet>
@@ -48,32 +48,37 @@
 								render="relatorio" />
 						</h:commandButton>
 					</f:facet>
-					<h:outputText value="#{item.nome}" rendered="#{not(componentesBean.pessoaSelecionada eq item)}" />
-					<h:inputText styleClass="input-text" value="#{item.nome}" rendered="#{componentesBean.pessoaSelecionada eq item}" />
+					<h:outputText value="#{item.nome}"
+						rendered="#{not(componentesBean.pessoaSelecionada eq item)}" />
+					<h:inputText styleClass="input-text" value="#{item.nome}"
+						rendered="#{componentesBean.pessoaSelecionada eq item}" />
 				</h:column>
 				<h:column>
 					<f:facet name="header">Endereço</f:facet>
-					<h:outputText value="#{item.endereco}" rendered="#{not(componentesBean.pessoaSelecionada eq item)}" />
-					<h:inputText styleClass="input-text" value="#{item.endereco}" rendered="#{componentesBean.pessoaSelecionada eq item}" />
+					<h:outputText value="#{item.endereco}"
+						rendered="#{not(componentesBean.pessoaSelecionada eq item)}" />
+					<h:inputText styleClass="input-text" value="#{item.endereco}"
+						rendered="#{componentesBean.pessoaSelecionada eq item}" />
 				</h:column>
 
 				<h:column headerClass="edit-column">
-					<h:commandButton   image="#{componentesBean.pessoaSelecionada eq item?'images/save.png':'images/editar.png'}"
-					title="#{componentesBean.pessoaSelecionada eq item?'Salvar':'Editar'}">
-						<f:ajax execute="@form" listener="#{componentesBean.editar(item)}" render="@form" />
+					<h:commandButton
+						image="#{componentesBean.pessoaSelecionada eq item?'images/save.png':'images/editar.png'}"
+						title="#{componentesBean.pessoaSelecionada eq item?'Salvar':'Editar'}">
+						<f:ajax execute="@form" listener="#{componentesBean.editar(item)}"
+							render="@form" />
 					</h:commandButton>
 				</h:column>
 				<h:column headerClass="edit-column">
-					<h:commandButton image="images/excluir.png" title="Excluir" >
+					<h:commandButton image="images/excluir.png" title="Excluir">
 						<f:ajax listener="#{componentesBean.excluir(item)}" render="@form" />
 					</h:commandButton>
 				</h:column>
-				
-			</h:dataTable>
-			<h:messages infoClass="check-info"/>
-		</h:form>
-		
-	</div>
 
+			</h:dataTable>
+			<h:messages infoClass="check-info" />
+		</h:form>
+
+	</div>
 </h:body>
 </html>
